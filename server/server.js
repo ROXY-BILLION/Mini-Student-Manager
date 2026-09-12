@@ -5,7 +5,7 @@ const studentRoutes = require("./routes/studentRoutes");
 const cors = require("cors");
 require("dotenv").config();
 
-app.use(cors());
+app.use(cors({ origin: "https://mini-student-manager.vercel.app" }));
 app.use(express.json());
 app.use("/api/students", studentRoutes);
 
