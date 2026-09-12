@@ -7,6 +7,7 @@ import "./App.css";
 
 
 function App() {
+  const API_URL = import.meta.env.VITE_API_URL 
   const [formData, setFormData] = useState({ name: "", email: "", course: "", age: "" })
   const [students, setStudents] = useState([]);
   const [editingStudentId, setEditingStudentId] = useState(null);
@@ -14,7 +15,7 @@ function App() {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/students");
+        const response = await axios.get(`${API_URL}/api/students`);
         setStudents(response.data);
       } catch (error) {
         console.error("Failed to fetch students", error);
@@ -38,7 +39,7 @@ function App() {
     if (editingStudentId) {
       // UPDATE STUDENT
       const response = await axios.put(
-        `http://localhost:5000/api/students/${editingStudentId}`,
+        `${API_URL}/api/students/${editingStudentId}`,
         formData
       );
 
@@ -54,7 +55,7 @@ function App() {
     } else {
       // ADD STUDENT
       const response = await axios.post(
-        "http://localhost:5000/api/students",
+        `${API_URL}/api/students`,
         formData
       );
 
@@ -85,7 +86,7 @@ function App() {
 
 const handleDelete = async (studentId) => {
   try {
-    await axios.delete(`http://localhost:5000/api/students/${studentId}`);
+    await axios.delete(`${API_URL}/api/students/${studentId}`);
     const updatedStudents = students.filter((student) => student._id !== studentId);
     setStudents(updatedStudents);
   } catch (error) {
